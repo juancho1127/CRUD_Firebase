@@ -1,9 +1,9 @@
 import * as React from "react";
 import * as RN from "react-native";
 import { collection, addDoc } from "firebase/firestore";
-import { database } from "../../config/fb";
 import { useNavigation } from "@react-navigation/native";
 import EmojiPicker from "rn-emoji-keyboard";
+import { database } from "../../config/fb";
 
 export default function Add() {
   const navigation = useNavigation();
@@ -22,12 +22,6 @@ export default function Add() {
       emoji: emojiObject.emoji,
     });
   };
-  /* example emojiObject = { 
-          "emoji": "❤️",
-          "name": "red heart",
-          "slug": "red_heart",
-        }
-      */
 
   const onSend = async () => {
     const docRef = await addDoc(collection(database, "products"), newItem);
@@ -36,7 +30,7 @@ export default function Add() {
 
   return (
     <RN.View style={styles.container}>
-      <RN.Text style={styles.title}>Sell a New Product</RN.Text>
+      <RN.Text style={styles.title}>Descripcion</RN.Text>
       <RN.Text onPress={() => setIsOpen(true)} style={styles.emoji}>
         {newItem.emoji}
       </RN.Text>
@@ -48,14 +42,15 @@ export default function Add() {
       <RN.TextInput
         onChangeText={(text) => setNewItem({ ...newItem, name: text })}
         style={styles.inputContainer}
-        placeholder="Product Name"
+        placeholder="Titulo"
       />
       <RN.TextInput
         onChangeText={(text) => setNewItem({ ...newItem, price: text })}
         style={styles.inputContainer}
-        placeholder="$ Price"
+        keyboardType="number-pad"
+        placeholder="$ Precio"
       />
-      <RN.Button title="Publish" onPress={onSend} />
+      <RN.Button title="Publicar" onPress={onSend} />
     </RN.View>
   );
 }
